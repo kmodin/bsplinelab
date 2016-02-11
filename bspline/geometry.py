@@ -105,6 +105,8 @@ class Sphere_geometry(Geometry):
         angle = np.linalg.norm(V1)
         s = np.sum(P1.conj()*W2).real
         
+        #s2 = np.inner(P1.conj(),W2).real #this gives wrong output.
+        #assert np.abs(s-s2)<1e-12 #many bonus points if you can figure out why this fails
         
         return (W2-s*P1)/sinc(angle)+s*self.g(angle)*V1
         

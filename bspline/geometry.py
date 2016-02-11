@@ -97,13 +97,16 @@ class Sphere_geometry(Geometry):
         idx = np.abs(angle)<2.0e-4 
         gg[idx]=-1.0/3-7.0/90*angle[idx]*angle[idx] # Taylor approximation for small angles (maybe unnecessary)
         return gg
-        
+           
     def dexpinv(self, P1,V1,W2):
-        """ (d exp_P1)^-1_V1 (W2) """
+        """ 
+        (d exp_P1)^-1_V1 (W2)
+        """
         angle = np.linalg.norm(V1)
-        s = np.sum(P1.conj()*W2).real # 
-        return (W2-s*P1)/sinc(angle)+s*self.g(angle)*V1
+        s = np.sum(P1.conj()*W2).real
         
+        
+        return (W2-s*P1)/sinc(angle)+s*self.g(angle)*V1
         
 class CP_geometry(Sphere_geometry):
     def __init__(self):
@@ -117,8 +120,6 @@ class CP_geometry(Sphere_geometry):
             rotations=np.angle(innerprods)
             rotations = rotations[:, np.newaxis,...]
         return super(CP_geometry, self).geodesic(P1, np.exp(-1j*rotations)*P2, theta)
-
-
 
 class SO3_geometry(Geometry):
     def __init__(self):
